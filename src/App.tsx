@@ -43,21 +43,34 @@
 
 // export default App;
 
-import { useState } from "react";
-import Tab from './Tab';
+import React, { useState } from 'react';
+import Tab from "./Tab"
+
+interface ButtonText {
+  btn: { text: string }[];
+}
 
 const data = {
-  tabs: [{ text: "tab1" }, { text: "tab2" }, { text: "tab3" }],
-};
+  tabs: [{ text: "tab1" }, { text: "tab2" }, { text: "tab3" }]
+}
+const newData = {
+  tabs: [{ text: "item1" }, { text: "item2" }, { text: "item3" }]
+}
+const name = {
+  btn: [{text: "tab1 - item1"}, {text: "tab2 - item2"}, {text: "tab3 - item3"}]
+}
+
 
 const App = () => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const [tabs, setTabs] = useState(data);
+  const [newTabs, setNewTabs] = useState(newData);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [btnText, setBtnText] = useState<ButtonText>(name)
 
-  return(
-  <>
+  return (
+    <>
       <Tab
-        data={tabs.tabs}
+        data={data.tabs}
         selectedIndex={selectedIndex}
         onClickItem={(item, index) => {
           setSelectedIndex(index)
@@ -66,13 +79,17 @@ const App = () => {
       <button
         onClick={() => {
           const newTabs = { ...tabs };
-          newTabs.tabs[0].text = "item1";
+          const newBtnText = { ...btnText };
+          for (let i = 0; i < tabs.tabs.length; i++) { 
+            if (tabs.tabs[i].text === btnText.btn[selectedIndex].text) {
+              newTabs.tabs[i] = newData.tabs[i];
+            }
+          }
           setTabs(newTabs);
         }}
       >
-        tab1 - item1
-      </button >
-    
+        {btnText.btn[selectedIndex].text}
+      </button>
     </>
   )
 }

@@ -35,18 +35,17 @@
 //  };
 
 
-// export default Tab;
-interface TapProps {
+interface TapProps { 
   data: { text: string }[];
+  
   selectedIndex: number;
-  onClickItem?: (item: string, index: number) => void;
+  onClickItem?: (item: string, index: number) => void
 }
 
-
-const Tab = ({ data, selectedIndex, onClickItem }: TapProps) => {
-  return(
+const Tab = ({ data, onClickItem, selectedIndex}: TapProps) => {
+  return (
     <ul style={{ display: "flex", listStyle: "none", padding: 12 }}>
-      {data.map(({text}, index)=> (
+      {data.map(({ text }, index) => (
         <li
           key={index}
           onClick={() => {
@@ -55,15 +54,14 @@ const Tab = ({ data, selectedIndex, onClickItem }: TapProps) => {
           style={{
             padding: 12,
             borderBottom:
-                selectedIndex === index ? "1px solid" : undefined,
-        }}
+              selectedIndex === index ? "1px solid" : undefined,
+          }}
         >
-          
           {text}
         </li>
       ))}
     </ul>
-  )
+  );
 };
 
 export default Tab;
